@@ -81,6 +81,11 @@ The project uses synthetic transaction data for demonstration purposes. Campaign
 
 Originally developed for the Paytm Build for India AI Hackathon – Delhi Edition, where the project reached the Top 80 teams from 1200+ participating teams.
 
+## 🔗 Project Links
+
+- 💻 **GitHub Repository: https://github.com/ritikasingh2509/Vyapaar-AI
+- 🌐 **Live Demo: https://vyapaar-ai-1-v8re.onrender.com/
+
 👩‍💻 Author
 
 Ritika Singh
