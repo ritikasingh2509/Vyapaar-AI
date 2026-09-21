@@ -448,7 +448,7 @@ app.get("/api/ai-business-analysis", async (req, res) => {
         const daytimeSales = daytimeTransactions.reduce((sum, t) => sum + t.amount, 0);
 
         const prompt = `
-You are an AI business partner for ${merchantName}, a small Paytm merchant.
+You are an AI business partner for ${merchantName}, a small business.
 
 Analyze this simulated transaction data:
 - Merchant: ${merchantName}
@@ -539,7 +539,7 @@ app.get("/api/ai-growth-recommendation", async (req, res) => {
         }
 
         const prompt = `
-You are Vyapaar AI, an AI growth partner for ${merchantName} (a Paytm merchant).
+You are Vyapaar AI, an AI growth partner for ${merchantName}.
 
 A business opportunity has been detected:
 - Merchant: ${merchantName}
@@ -642,8 +642,13 @@ Rules:
 app.get("/api/campaign-result", async (req, res) => {
     try {
         const merchantName = req.query.merchant_name || "Sharma Café";
-        if (!campaignActivated || !latestAction) {
-            return res.json({ success: false, message: "No campaign has been activated yet." });
+        const merchantState = merchantCampaigns[merchantName];
+
+        if (!merchantState?.activated || !merchantState.action) {
+            return res.json({
+                success: false,
+                message: "No campaign has been activated yet."
+            });
         }
 
         const transactions = await Transaction.find({
@@ -652,37 +657,75 @@ app.get("/api/campaign-result", async (req, res) => {
         }).sort({ date: 1 });
 
         if (transactions.length === 0) {
-            return res.json({ success: false, message: "No transaction data available." });
+            return res.json({
+                success: false,
+                message: "No transaction data available."
+            });
         }
 
-        const latestDate = transactions[transactions.length - 1].date.toISOString().split("T")[0];
-        const latestDayTransactions = transactions.filter(t => t.date.toISOString().split("T")[0] === latestDate);
-        const currentSales = latestDayTransactions.reduce((sum, t) => sum + t.amount, 0);
+        const latestDate = transactions[transactions.length - 1].date
+            .toISOString()
+            .split("T")[0];
 
-        const previousTransactions = transactions.filter(t => t.date.toISOString().split("T")[0] !== latestDate);
-        const previousDates = [...new Set(previousTransactions.map(t => t.date.toISOString().split("T")[0]))];
-        const previousSales = previousTransactions.reduce((sum, t) => sum + t.amount, 0);
-        const previousAverageSales = previousDates.length > 0 ? previousSales / previousDates.length : 0;
+        const latestDayTransactions = transactions.filter(
+            t => t.date.toISOString().split("T")[0] === latestDate
+        );
+
+        const currentSales = latestDayTransactions.reduce(
+            (sum, t) => sum + t.amount,
+            0
+        );
+
+        const previousTransactions = transactions.filter(
+            t => t.date.toISOString().split("T")[0] !== latestDate
+        );
+
+        const previousDates = [
+            ...new Set(
+                previousTransactions.map(
+                    t => t.date.toISOString().split("T")[0]
+                )
+            )
+        ];
+
+        const previousSales = previousTransactions.reduce(
+            (sum, t) => sum + t.amount,
+            0
+        );
+
+        const previousAverageSales =
+            previousDates.length > 0
+                ? previousSales / previousDates.length
+                : 0;
 
         const simulatedUplift = 12;
-        const simulatedSalesAfterCampaign = Math.round(currentSales * (1 + simulatedUplift / 100));
+
+        const simulatedSalesAfterCampaign = Math.round(
+            currentSales * (1 + simulatedUplift / 100)
+        );
 
         res.json({
             success: true,
             merchantName,
-   
+
             result: {
                 previousSales: Math.round(previousAverageSales),
                 currentSales: simulatedSalesAfterCampaign,
                 salesUplift: simulatedUplift,
-                campaign: latestAction.type,
+                campaign: merchantState.action.type,
                 status: "Completed",
                 simulated: true
             }
         });
+
     } catch (error) {
         console.log("Campaign Result Error:", error);
-        res.status(500).json({ success: false, message: "Error fetching campaign result", error: error.message });
+
+        res.status(500).json({
+            success: false,
+            message: "Error fetching campaign result",
+            error: error.message
+        });
     }
 });
 
