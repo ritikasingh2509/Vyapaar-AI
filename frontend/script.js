@@ -1,6 +1,6 @@
 // ─── Vyapaar AI — Frontend Controller ───
 
-const API_BASE = "http://localhost:5001/api";
+const API_BASE = "https://vyapaar-ai-dh59.onrender.com/api";
 
 // ─── State ───
 let currentMerchant = "Sharma Café";
