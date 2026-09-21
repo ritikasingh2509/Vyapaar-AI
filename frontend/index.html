@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyapaar AI — AI Growth Partner for Paytm Merchants</title>
+    <meta name="description" content="AI-powered growth recommendations for Paytm merchants. Observe, understand, recommend, execute, and measure business growth.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2 class="logo">Vyapaar AI</h2>
+        <p class="logo-sub">Growth Partner</p>
+
+        <nav>
+            <a href="#dashboard" class="active">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="#business-insights">
+                <i data-lucide="bar-chart-3"></i>
+                Business Insights
+            </a>
+
+            <a href="#growth-actions">
+                <i data-lucide="zap"></i>
+                Growth Actions
+            </a>
+
+            <a href="#performance">
+                <i data-lucide="activity"></i>
+                Performance
+            </a>
+        </nav>
+    </aside>
+
+
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <h1>Vyapaar AI</h1>
+            <p>Helping merchants decide what to do next</p>
+        </div>
+
+        <div class="merchant-selector">
+            <button class="merchant-selector-btn" id="merchantSelectorBtn">
+                <div class="merchant-avatar" id="merchantAvatar">SC</div>
+                <div class="merchant-info">
+                    <strong id="merchantName">Sharma Café</strong>
+                    <span>Paytm Merchant</span>
+                </div>
+                <i data-lucide="chevron-down"></i>
+            </button>
+
+            <div class="merchant-dropdown" id="merchantDropdown">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- Dashboard Welcome -->
+        <section id="dashboard" class="card welcome-card">
+            <h2 id="welcomeHeading">Good Evening, Sharma Café</h2>
+            <p id="welcomeSubtext">Here's what Vyapaar AI detected from your recent transactions.</p>
+        </section>
+
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i data-lucide="indian-rupee"></i>
+                </div>
+                <div class="stat-label">Today's Sales</div>
+                <div class="stat-value" id="currentSales">—</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon slate">
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="stat-label">Avg. Previous Day</div>
+                <div class="stat-value" id="lastMonthSales">—</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon red">
+                    <i data-lucide="trending-down"></i>
+                </div>
+                <div class="stat-label">Day-over-Day Change</div>
+                <div class="stat-value negative" id="salesChange">—</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i data-lucide="receipt"></i>
+                </div>
+                <div class="stat-label">Today's Transactions</div>
+                <div class="stat-value" id="transactions">—</div>
+            </div>
+
+        </div>
+
+
+        <!-- Business Intelligence -->
+        <section id="business-insights" class="card">
+            <span class="card-label ai">AI ANALYSIS</span>
+            <div class="section-header">
+                <h2>
+                    <i data-lucide="sparkles"></i>
+                    Business Intelligence
+                </h2>
+            </div>
+
+            <p id="healthMessage" class="health-content loading">
+                Analyzing your transaction patterns…
+            </p>
+        </section>
+
+
+        <!-- Hourly Sales Performance Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3>Hourly Sales Performance</h3>
+                <p>Latest-day sales vs historical hourly baseline</p>
+            </div>
+            <canvas id="hourlyChart"></canvas>
+        </div>
+
+
+        <!-- Flow Indicator -->
+        <div class="flow-indicator" id="flowIndicator">
+            <div class="flow-step completed" id="flowObserve">
+                <i data-lucide="check-circle"></i>
+                <span>Observe</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step completed" id="flowUnderstand">
+                <i data-lucide="check-circle"></i>
+                <span>Understand</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step active" id="flowRecommend">
+                <i data-lucide="lightbulb"></i>
+                <span>Recommend</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step" id="flowExecute">
+                <i data-lucide="play-circle"></i>
+                <span>Execute</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step" id="flowMeasure">
+                <i data-lucide="bar-chart-2"></i>
+                <span>Measure</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step" id="flowGrow">
+                <i data-lucide="trending-up"></i>
+                <span>Grow</span>
+            </div>
+        </div>
+
+
+        <!-- AI Growth Options -->
+        <section id="growth-actions" class="card">
+            <span class="card-label ai">AI-POWERED RECOMMENDATIONS</span>
+            <div class="section-header">
+                <h2>
+                    <i data-lucide="lightbulb"></i>
+                    Growth Options
+                </h2>
+            </div>
+
+            <!-- Opportunity Banner -->
+            <div class="opportunity-banner" id="opportunityBanner" style="display:none;">
+                <div class="opp-icon">
+                    <i data-lucide="alert-triangle"></i>
+                </div>
+                <div class="opp-text" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+                        <strong id="oppTitle" style="margin-bottom: 0;">Opportunity Detected</strong>
+                        <span class="target-window-badge" id="oppTargetWindow">Target window: --:--</span>
+                    </div>
+                    <span id="oppDescription" style="display: block; font-size: 13px; color: #a16207; line-height: 1.5;">—</span>
+                    <p style="font-size: 11.5px; color: #92400e; margin-top: 8px; font-weight: 500; opacity: 0.9;">
+                        Note: Overall performance can be positive while specific time windows still show growth opportunities.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3 Recommendation Cards -->
+            <div id="recommendationCards">
+                <div class="rec-loading">
+                    <div class="spinner"></div>
+                    <p>Sarvam AI is generating growth options…</p>
+                </div>
+            </div>
+
+            <p id="actionStatus"></p>
+        </section>
+
+
+        <!-- Performance Monitor -->
+        <section class="card" id="performance" style="display: none;">
+            <span class="card-label">CAMPAIGN RESULTS</span>
+            <div class="section-header">
+                <h2>
+                    <i data-lucide="activity"></i>
+                    Campaign Performance
+                    <span class="performance-badge">Simulated</span>
+                </h2>
+            </div>
+
+            <p style="font-size:13px;color:#64748b;margin-bottom:4px;">Tracking the projected impact of your activated growth action.</p>
+
+            <div class="performance-grid">
+                <div class="performance-result">
+                    <p>Campaign Status</p>
+                    <h3 id="campaignStatus">—</h3>
+                </div>
+
+                <div class="performance-result">
+                    <p>Growth Action</p>
+                    <h3 id="campaignName">—</h3>
+                </div>
+
+                <div class="performance-result" id="salesResult" style="display:none;">
+                    <p>Projected Sales (Simulated)</p>
+                    <h3 id="salesAfterCampaign">₹0</h3>
+                </div>
+
+                <div class="performance-result" id="upliftResult" style="display:none;">
+                    <p>Estimated Uplift</p>
+                    <h3 id="salesUplift" class="uplift">0%</h3>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Activity Timeline -->
+        <section class="card">
+            <span class="card-label">ACTIVITY LOG</span>
+            <div class="section-header">
+                <h2>
+                    <i data-lucide="clock"></i>
+                    Activity Timeline
+                </h2>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot completed">
+                        <i data-lucide="check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <strong>Transaction patterns analyzed</strong>
+                        <span>Vyapaar AI • Business Health Check</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot completed">
+                        <i data-lucide="check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <strong id="recommendedActionHistory">Growth opportunities identified</strong>
+                        <span>Sarvam AI • 3 options generated</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" id="activatedHistory" style="display: none;">
+                    <div class="timeline-dot active"></div>
+                    <div class="timeline-content">
+                        <strong id="activatedActionHistory">Action activated</strong>
+                        <span>Merchant approved • Campaign live</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

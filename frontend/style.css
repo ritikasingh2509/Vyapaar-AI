@@ -1,0 +1,831 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Reset & Global Rules ── */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Sidebar Navigation ── */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100vh;
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.sidebar .logo {
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    padding: 0 10px;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar .logo-sub {
+    color: #64748b;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 0 10px;
+    margin-bottom: 28px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar nav a:hover {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+.sidebar nav a.active {
+    background: #1e293b;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 #2563eb;
+}
+
+.sidebar nav svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+/* ── Top Header Bar ── */
+.topbar {
+    margin-left: 240px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.topbar-left h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+}
+
+.topbar-left p {
+    color: #64748b;
+    font-size: 12.5px;
+    margin-top: 2px;
+    font-weight: 400;
+}
+
+/* ── Merchant Selector ── */
+.merchant-selector {
+    position: relative;
+}
+
+.merchant-selector-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 6px 12px 6px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    font-family: inherit;
+}
+
+.merchant-selector-btn:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+.merchant-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+}
+
+.merchant-selector-btn .merchant-info strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.merchant-selector-btn .merchant-info span {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 400;
+    text-align: left;
+}
+
+.merchant-selector-btn svg {
+    width: 15px;
+    height: 15px;
+    color: #64748b;
+    margin-left: 2px;
+}
+
+.merchant-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+    min-width: 220px;
+    z-index: 200;
+    overflow: hidden;
+}
+
+.merchant-dropdown.open {
+    display: block;
+}
+
+.merchant-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+}
+
+.merchant-dropdown-item:hover {
+    background: #f1f5f9;
+}
+
+.merchant-dropdown-item.active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.merchant-dropdown-item .merchant-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+}
+
+/* ── Main Content Container ── */
+main {
+    margin-left: 240px;
+    padding: 24px 32px 40px;
+}
+
+/* ── Section Cards ── */
+.card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.card-label {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.card-label.ai {
+    color: #2563eb;
+}
+
+/* ── Dashboard Welcome Card ── */
+.welcome-card {
+    border-left: 3px solid #2563eb;
+    padding: 18px 22px;
+}
+
+.welcome-card h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2px;
+    line-height: 1.3;
+}
+
+.welcome-card p {
+    color: #475569;
+    font-size: 13px;
+}
+
+/* ── Key Performance Indicators (KPI Stats Grid) ── */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.stat-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.stat-icon.blue {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #dbeafe;
+}
+
+.stat-icon.slate {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.stat-icon.red {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+}
+
+.stat-icon.green {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #dcfce7;
+}
+
+.stat-card .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+    line-height: 1.3;
+}
+
+.stat-card .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    line-height: 1.1;
+    margin-top: 2px;
+}
+
+.stat-card .stat-value.negative {
+    color: #dc2626;
+}
+
+.stat-card .stat-value.positive {
+    color: #16a34a;
+}
+
+/* ── Section Headers ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-header h2 svg {
+    width: 18px;
+    height: 18px;
+    color: #2563eb;
+}
+
+/* ── Business Intelligence Section ── */
+.health-content {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #334155;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 6px;
+    padding: 14px 16px;
+}
+
+.health-content.loading {
+    color: #64748b;
+    font-style: italic;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+/* ── Chart Card Section ── */
+.chart-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.chart-card .chart-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.chart-card .chart-header p {
+    font-size: 12.5px;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.chart-card canvas {
+    width: 100% !important;
+    max-height: 280px;
+}
+
+/* ── Flow Indicator Pipeline ── */
+.flow-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 20px;
+    padding: 10px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.flow-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.flow-step.active {
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+}
+
+.flow-step.completed {
+    color: #15803d;
+}
+
+.flow-arrow {
+    margin: 0 4px;
+    color: #cbd5e1;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.flow-step svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ── Opportunity Detection Banner ── */
+.opportunity-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 4px solid #d97706;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.opportunity-banner .opp-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: #fef3c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #d97706;
+}
+
+.opportunity-banner .opp-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.opportunity-banner .opp-text strong {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #78350f;
+}
+
+.target-window-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #92400e;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+}
+
+/* ── AI Recommendation Cards Section ── */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.recommendation-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    background: #ffffff;
+}
+
+.recommendation-card:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.recommendation-card .rec-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recommendation-card .rec-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.recommendation-card .rec-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.recommendation-card .rec-desc {
+    font-size: 12.5px;
+    color: #475569;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.recommendation-card .rec-discount {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #166534;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    width: fit-content;
+}
+
+.recommendation-card .rec-activate-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    font-family: inherit;
+    width: 100%;
+}
+
+.recommendation-card .rec-activate-btn:hover {
+    background: #1d4ed8;
+}
+
+.recommendation-card .rec-activate-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.recommendation-card .rec-activate-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+.recommendation-card.selected {
+    border-color: #2563eb;
+    background: #f8fafc;
+    box-shadow: inset 0 0 0 1px #2563eb;
+}
+
+.recommendation-card.selected .rec-activate-btn {
+    background: #16a34a;
+}
+
+.rec-loading {
+    text-align: center;
+    padding: 32px 20px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.rec-loading .spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-bottom: 8px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#actionStatus {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #16a34a;
+}
+
+/* ── Campaign Performance Monitor ── */
+.performance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #b45309;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.performance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.performance-result {
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+}
+
+.performance-result p {
+    color: #64748b;
+    font-size: 11.5px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.performance-result h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.performance-result h3.uplift {
+    color: #16a34a;
+}
+
+/* ── Activity Timeline ── */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 12px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: #e2e8f0;
+}
+
+.timeline-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+}
+
+.timeline-dot.completed {
+    background: #f0fdf4;
+    border-color: #16a34a;
+}
+
+.timeline-dot.completed svg {
+    width: 11px;
+    height: 11px;
+    color: #16a34a;
+}
+
+.timeline-dot.active {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+.timeline-content strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 1px;
+}
+
+.timeline-content span {
+    font-size: 11.5px;
+    color: #64748b;
+    font-weight: 400;
+}
+
+/* ── Responsive Rules ── */
+@media (max-width: 1100px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .recommendations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    .topbar, main {
+        margin-left: 0;
+    }
+    .topbar {
+        padding: 14px 20px;
+    }
+    main {
+        padding: 16px 20px 32px;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .flow-indicator {
+        flex-wrap: wrap;
+    }
+    .performance-grid {
+        grid-template-columns: 1fr;
+    }
+}
